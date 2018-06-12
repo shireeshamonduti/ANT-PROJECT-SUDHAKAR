@@ -1,0 +1,36 @@
+<project name="my app" default="zip">
+
+       <target name="clean">
+	<delete dir="output"/>
+	<delete dir="dist"/>
+                <delete dir="final"/>
+       </target>
+    
+       <target name="init" depends="clean">
+
+	<mkdir dir="dist"/>
+	<mkdir dir="output/classfile"/>
+	<mkdir dir="final"/>
+       </target>
+
+      <target name="compile" depends="init">
+        <javac srcdir="src"
+         destdir="output/classfile"/>
+        </target>
+    
+        <target name="jar" depends="compile">
+        <jar destfile="final/app-1.0.jar" basedir="output/classfile"/>
+        </target>
+       
+        <target name="copy" depends="jar">
+       <copy todir="final">
+       <fileset dir="src/web"/>
+       </copy>
+      </target>
+      
+      <target name="zip" depends="copy">
+      <zip destfile="dist/app-1.0.zip"
+      basedir="final"/>
+     </target>
+
+</project>
